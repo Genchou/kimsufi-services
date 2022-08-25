@@ -1,0 +1,4 @@
+plex.local {
+  encode gzip
+  reverse_proxy plex:32400
+} 
