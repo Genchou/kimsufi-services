@@ -20,6 +20,7 @@ services:
       SERVER_NAME: ${SERVER_NAME:-localhost}
       PLEX_DATA: ${PLEX_DATA:-./plexdata}
       TZ: ${TIMEZONE:-Europe/Brussels}
+      PLEX_HOSTNAME: ${PLEX_HOSTNAME:-plexmediaserver}
     hostname: ${PLEX_HOSTNAME:-plexmediaserver}
     volumes:
       - ${PLEX_DATA:-./plexdata}/database:/config
