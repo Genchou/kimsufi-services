@@ -1,0 +1,10 @@
+[Unit]
+Description=Docker server for Plex with Caddy as a reverse proxy.
+Type=simple
+ExecStart=docker compose up -d
+Restart=on-failure
+User=
+WorkingDirectory=
+
+[Install]
+WantedBy=multi-user.target
