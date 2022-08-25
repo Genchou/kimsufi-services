@@ -17,9 +17,10 @@ services:
       - 32413:32413/udp
       - 32414:32414/udp
     environment:
-      - PLEX_DATA=${PLEX_DATA:-./plexdata}
-      - TZ=Europe/Brussels
-    hostname: plexmediaserver
+      SERVER_NAME: ${SERVER_NAME:-localhost}
+      PLEX_DATA: ${PLEX_DATA:-./plexdata}
+      TZ: ${TIMEZONE:-Europe/Brussels}
+    hostname: ${PLEX_HOSTNAME:-plexmediaserver}
     volumes:
       - ${PLEX_DATA:-./plexdata}/database:/config
       - ${PLEX_DATA:-./plexdata}/transcode:/transcode
@@ -30,6 +31,8 @@ services:
       context: .
       target: app_caddy
     restart: unless-stopped
+    depends_on:
+      - plex
     ports:
       # HTTP
       - target: 80
@@ -39,3 +42,5 @@ services:
       - target: 443
         published: ${HTTPS_PORT:-443}
         protocol: tcp
+    environment:
+      SERVER_NAME: ${SERVER_NAME:-localhost}

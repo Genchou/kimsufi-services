@@ -1,4 +1,8 @@
-plex.local {
+{$SERVER_NAME}
+
+log
+
+route {
   encode gzip
   reverse_proxy plex:32400
 } 
