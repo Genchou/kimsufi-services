@@ -22,6 +22,7 @@ services:
       TZ: ${TIMEZONE:-Europe/Brussels}
       PLEX_HOSTNAME: ${PLEX_HOSTNAME:-plexmediaserver}
       PLEX_CLAIM: ${PLEX_CLAIM:-no}
+      ADVERTISE_IP: ${ADVERTISE_IP:-http://127.0.0.1:32400/}
     hostname: ${PLEX_HOSTNAME:-plexmediaserver}
     volumes:
       - ${PLEX_DATA:-./plexdata}/database:/config
