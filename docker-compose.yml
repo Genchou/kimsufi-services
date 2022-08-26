@@ -47,3 +47,6 @@ services:
         protocol: tcp
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
+    volumes:
+      - ./docker/caddy/data:/data
+      - ./docker/caddy/config:/config
