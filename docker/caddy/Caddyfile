@@ -4,5 +4,5 @@ log
 
 route {
   encode gzip
-  reverse_proxy plex:32400
+  reverse_proxy localhost:32400
 } 
