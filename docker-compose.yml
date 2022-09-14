@@ -38,6 +38,7 @@ services:
     image: jellyfin/jellyfin
     container_name: jellyfin
     network_mode: host
+    user: ${DELUGE_UID:-1000}:${DELUGE_GID:-1000}
     volumes:
       - ./docker/jellyfin/config:/config
       - ./docker/jellyfin/cache:/cache
