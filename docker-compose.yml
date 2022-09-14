@@ -5,50 +5,60 @@ services:
     build:
       context: .
       target: app_pms
+    container_name: plex
     restart: unless-stopped
     network_mode: host
-    # ports:
-    #   - 32400:32400/tcp
-    #   - 3005:3005/tcp
-    #   - 8324:8324/tcp
-    #   - 32469:32469/tcp
-    #   - 1900:1900/udp
-    #   - 32410:32410/udp
-    #   - 32412:32412/udp
-    #   - 32413:32413/udp
-    #   - 32414:32414/udp
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
       PLEX_DATA: ${PLEX_DATA:-./plexdata}
       TZ: ${TIMEZONE:-Europe/Brussels}
       PLEX_HOSTNAME: ${PLEX_HOSTNAME:-plexmediaserver}
       PLEX_CLAIM: ${PLEX_CLAIM:-no}
-      # ADVERTISE_IP: ${ADVERTISE_IP:-http://127.0.0.1:32400/}
     hostname: ${PLEX_HOSTNAME:-plexmediaserver}
     volumes:
       - ${PLEX_DATA:-./plexdata}/database:/config
       - ${PLEX_DATA:-./plexdata}/transcode:/transcode
       - ${PLEX_DATA:-./plexdata}/media:/data
 
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    network_mode: host
+    environment:
+      PUID: ${DELUGE_UID:-1000}
+      PGID: ${DELUGE_GID:-1000}
+      TZ: ${TIMEZONE:-Europe/Brussels}
+      DELUGE_LOGLEVEL: ${DELUGE_LOGLEVEL:-error} #optional
+    volumes:
+      - ./docker/deluge/config:/config
+      - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
+    restart: unless-stopped
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    network_mode: host
+    volumes:
+      - ./docker/jellyfin/config:/config
+      - ./docker/jellyfin/cache:/cache
+      - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
+    restart: unless-stopped
+
   caddy:
     build:
       context: .
       target: app_caddy
+    container_name: caddy
     restart: unless-stopped
     depends_on:
       - plex
+      - deluge
+      - jellyfin
     network_mode: host
-    # ports:
-    #   # HTTP
-    #   - target: 80
-    #     published: ${HTTP_PORT:-80}
-    #     protocol: tcp
-    #   # HTTPS
-    #   - target: 443
-    #     published: ${HTTPS_PORT:-443}
-    #     protocol: tcp
     environment:
-      SERVER_NAME: ${SERVER_NAME:-localhost}
+      PLEX_SERVER_NAME: ${PLEX_SERVER_NAME:-plex.local}
+      DELUGE_SERVER_NAME: ${DELUGE_SERVER_NAME:-deluge.local}
+      JELLYFIN_SERVER_NAME: ${JELLYFIN_SERVER_NAME:-jellyfin.local}
     volumes:
       - ./docker/caddy/data:/data
       - ./docker/caddy/config:/config

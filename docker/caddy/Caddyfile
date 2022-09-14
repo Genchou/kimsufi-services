@@ -1,8 +1,26 @@
-{$SERVER_NAME}
+{$DELUGE_SERVER_NAME} {
+  log
 
-log
+  route {
+    encode gzip
+    reverse_proxy deluge:8112
+  }
+}
 
-route {
-  encode gzip
-  reverse_proxy plex:32400
-} 
+{$PLEX_SERVER_NAME} {
+  log
+
+  route {
+    encode gzip
+    reverse_proxy plex:32400
+  }
+}
+
+{$JELLYFIN_SERVER_NAME} {
+  log
+
+  route {
+    encode gzip
+    reverse_proxy jellyfin:8096
+  }
+}
