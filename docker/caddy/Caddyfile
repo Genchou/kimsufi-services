@@ -3,7 +3,7 @@
 
   route {
     encode gzip
-    reverse_proxy deluge:8112
+    reverse_proxy localhost:8112
   }
 }
 
@@ -12,7 +12,7 @@
 
   route {
     encode gzip
-    reverse_proxy plex:32400
+    reverse_proxy localhost:32400
   }
 }
 
@@ -21,6 +21,6 @@
 
   route {
     encode gzip
-    reverse_proxy jellyfin:8096
+    reverse_proxy localhost:8096
   }
 }
