@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  plex:
+    network_mode: host
+  jellyfin:
+    network_mode: host
+  deluge:
+    network_mode: host
+  caddy:
+    network_mode: host
+    volumes:
+      - ./docker/caddy/data:/data
+      - ./docker/caddy/config:/config

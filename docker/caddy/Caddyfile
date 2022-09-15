@@ -3,7 +3,7 @@
 
   route {
     encode gzip
-    reverse_proxy localhost:8112
+    reverse_proxy {$DELUGE_HOST}:8112
   }
 }
 
@@ -12,7 +12,7 @@
 
   route {
     encode gzip
-    reverse_proxy localhost:32400
+    reverse_proxy {$PLEX_HOST}:32400
   }
 }
 
@@ -21,6 +21,15 @@
 
   route {
     encode gzip
-    reverse_proxy localhost:8096
+    reverse_proxy {$JELLYFIN_HOST}:8096
+  }
+}
+
+{$OWNCLOUD_SERVER_NAME} {
+  log
+
+  route {
+    encode gzip
+    reverse_proxy {$OWNCLOUD_HOST}:{$OWNCLOUD_PORT}
   }
 }

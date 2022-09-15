@@ -7,7 +7,6 @@ services:
       target: app_pms
     container_name: plex
     restart: unless-stopped
-    network_mode: host
     environment:
       SERVER_NAME: ${SERVER_NAME:-localhost}
       PLEX_DATA: ${PLEX_DATA:-./plexdata}
@@ -23,7 +22,6 @@ services:
   deluge:
     image: lscr.io/linuxserver/deluge:latest
     container_name: deluge
-    network_mode: host
     environment:
       PUID: ${DELUGE_UID:-1000}
       PGID: ${DELUGE_GID:-1000}
@@ -45,6 +43,64 @@ services:
       - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
     restart: unless-stopped
 
+  redis:
+    image: redis
+    container_name: redis
+    restart: always
+    command: ["--databases", "1"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # volumes:
+    #   - redis:/data
+
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=owncloud
+      - MYSQL_USER=owncloud
+      - MYSQL_PASSWORD=owncloud
+      - MYSQL_DATABASE=owncloud
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=owncloud"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    # volumes:
+    #   - mariadb:/var/lib/mysql
+
+  owncloud:
+    image: owncloud/server:latest
+    container_name: owncloud_server
+    restart: always
+    depends_on:
+      - mariadb
+      - redis
+    environment:
+      - OWNCLOUD_DOMAIN=${OWNCLOUD_DOMAIN:-localhost}
+      - OWNCLOUD_DB_TYPE=mysql
+      - OWNCLOUD_DB_NAME=owncloud
+      - OWNCLOUD_DB_USERNAME=owncloud
+      - OWNCLOUD_DB_PASSWORD=owncloud
+      - OWNCLOUD_DB_HOST=mariadb
+      - OWNCLOUD_ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+      - OWNCLOUD_ADMIN_PASSWORD=${ADMIN_PASSWORD:-secret}
+      - OWNCLOUD_MYSQL_UTF8MB4=true
+      - OWNCLOUD_REDIS_ENABLED=true
+      - OWNCLOUD_REDIS_HOST=redis
+    healthcheck:
+      test: ["CMD", "/usr/bin/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - owncloud_files:/mnt/data
+
   caddy:
     build:
       context: .
@@ -55,11 +111,17 @@ services:
       - plex
       - deluge
       - jellyfin
-    network_mode: host
     environment:
       PLEX_SERVER_NAME: ${PLEX_SERVER_NAME:-plex.local}
       DELUGE_SERVER_NAME: ${DELUGE_SERVER_NAME:-deluge.local}
       JELLYFIN_SERVER_NAME: ${JELLYFIN_SERVER_NAME:-jellyfin.local}
-    volumes:
-      - ./docker/caddy/data:/data
-      - ./docker/caddy/config:/config
+      OWNCLOUD_SERVER_NAME: ${OWNCLOUD_SERVER_NAME:-owncloud.local}
+      PLEX_HOST: localhost
+      JELLYFIN_HOST: localhost
+      DELUGE_HOST: localhost
+      OWNCLOUD_HOST: localhost
+
+volumes:
+  owncloud_files:
+  # mariadb:
+  # redis:
