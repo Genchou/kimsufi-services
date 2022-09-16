@@ -7,6 +7,10 @@ services:
     network_mode: host
   deluge:
     network_mode: host
+  owncloud:
+    network_mode: host
+    volumes:
+      - ${OWNCLOUD_DATA_DIR:-./docker/owncloud/data}:/mnt/data
   caddy:
     network_mode: host
     volumes:
