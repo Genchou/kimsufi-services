@@ -18,9 +18,12 @@ services:
       - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
 
   mariadb:
+    network_mode: host
     volumes:
       - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
+
   redis:
+    network_mode: host
     volumes:
       - ${REDIS_DIR:-./docker/redis/data}:/data
 
