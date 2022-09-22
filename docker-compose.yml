@@ -14,10 +14,6 @@ services:
       PLEX_HOSTNAME: ${PLEX_HOSTNAME:-plexmediaserver}
       PLEX_CLAIM: ${PLEX_CLAIM:-no}
     hostname: ${PLEX_HOSTNAME:-plexmediaserver}
-    volumes:
-      - ${PLEX_DATA:-./plexdata}/database:/config
-      - ${PLEX_DATA:-./plexdata}/transcode:/transcode
-      - ${PLEX_DATA:-./plexdata}/media:/data
 
   deluge:
     image: lscr.io/linuxserver/deluge:latest
@@ -27,9 +23,6 @@ services:
       PGID: ${DELUGE_GID:-1000}
       TZ: ${TIMEZONE:-Europe/Brussels}
       DELUGE_LOGLEVEL: ${DELUGE_LOGLEVEL:-error} #optional
-    volumes:
-      - ./docker/deluge/config:/config
-      - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
     restart: unless-stopped
 
   jellyfin:
@@ -53,8 +46,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    volumes:
-      - redis:/data
 
   mariadb:
     image: mariadb
@@ -71,8 +62,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-    volumes:
-      - mariadb:/var/lib/mysql
 
   owncloud:
     image: owncloud/server:latest
@@ -98,8 +87,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
-    volumes:
-      - owncloud_files:/mnt/data
 
   caddy:
     build:
@@ -112,9 +99,6 @@ services:
       - deluge
       - jellyfin
       - owncloud
-    volumes:
-      - caddy_data:/data
-      - caddy_config:/config
     environment:
       PLEX_SERVER_NAME: ${PLEX_SERVER_NAME:-plex.local}
       DELUGE_SERVER_NAME: ${DELUGE_SERVER_NAME:-deluge.local}
@@ -124,10 +108,3 @@ services:
       JELLYFIN_HOST: localhost
       DELUGE_HOST: localhost
       OWNCLOUD_HOST: localhost
-
-volumes:
-  caddy_data:
-  caddy_config:
-  owncloud_files:
-  mariadb:
-  redis:

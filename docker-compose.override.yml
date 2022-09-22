@@ -12,12 +12,19 @@ services:
       - 32412:32412/udp
       - 32413:32413/udp
       - 32414:32414/udp
+    volumes:
+      - plex_config:/config
+      - plex_transcode:/transcode
+      - plex_data:/data
 
   deluge:
     ports:
       - 8112:8112
       - 6881:6881
       - 6881:6881/udp
+    volumes:
+      - deluge_downloads:/config
+      - deluge_config:/downloads
 
   jellyfin:
     ports:
@@ -25,9 +32,19 @@ services:
     expose:
       - 8096
 
+  mariadb:
+    volumes:
+      - mariadb:/var/lib/mysql
+
+  redis:
+    volumes:
+      - redis:/data
+
   owncloud:
     ports:
       - ${OWNCLOUD_PORT:-8080}:8080
+    volumes:
+      - owncloud_files:/mnt/data
 
   caddy:
     environment:
@@ -35,6 +52,9 @@ services:
       JELLYFIN_HOST: jellyfin
       DELUGE_HOST: deluge
       OWNCLOUD_HOST: owncloud
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
     ports:
       # HTTP
       - target: 80
@@ -44,3 +64,15 @@ services:
       - target: 443
         published: ${HTTPS_PORT:-443}
         protocol: tcp
+
+volumes:
+  caddy_data:
+  caddy_config:
+  owncloud_files:
+  mariadb:
+  redis:
+  deluge_downloads:
+  deluge_config:
+  plex_data:
+  plex_transcode:
+  plex_config:

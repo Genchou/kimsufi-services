@@ -3,16 +3,34 @@ version: "3.4"
 services:
   plex:
     network_mode: host
+    volumes:
+      - ${PLEX_DATA:-./plexdata}/database:/config
+      - ${PLEX_DATA:-./plexdata}/transcode:/transcode
+      - ${PLEX_DATA:-./plexdata}/media:/data
+
   jellyfin:
     network_mode: host
+
   deluge:
     network_mode: host
+    volumes:
+      - ${DELUGE_CONFIG_DIR:-./docker/deluge/config}:/config
+      - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
+
+  mariadb:
+    volumes:
+      - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
+  redis:
+    volumes:
+      - ${REDIS_DIR:-./docker/redis/data}:/data
+
   owncloud:
     network_mode: host
     volumes:
       - ${OWNCLOUD_DATA_DIR:-./docker/owncloud/data}:/mnt/data
+
   caddy:
     network_mode: host
     volumes:
-      - ./docker/caddy/data:/data
-      - ./docker/caddy/config:/config
+      - ${CADDY_DATA_DIR:-./docker/caddy/data}:/data
+      - ${CADDY_CONFIG_DIR:-./docker/caddy/config}:/config
