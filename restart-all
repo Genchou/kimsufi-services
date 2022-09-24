@@ -16,8 +16,10 @@ done
 docker compose down --remove-orphans
 
 if [ $RUN_ENV == 'prod']; then
+  echo "Starting with PROD env"
   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 else
+  echo "Starting with DEV env"
   docker compose up -d
 fi 
 
