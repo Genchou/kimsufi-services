@@ -58,7 +58,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-owncloud}
     command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=owncloud"]
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=${MYSQL_ROOT_PASSWORD:-owncloud}"]
       interval: 10s
       timeout: 5s
       retries: 5
