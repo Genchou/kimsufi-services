@@ -31,6 +31,10 @@ services:
       - 8096:8096
     expose:
       - 8096
+    volumes:
+      - jellyfin_cache:/cache
+      - jellyfin_config:/config
+      - jellyfin_data:/media
 
   mariadb:
     volumes:
@@ -71,6 +75,9 @@ volumes:
   owncloud_files:
   mariadb:
   redis:
+  jellyfin_data:
+  jellyfin_config:
+  jellyfin_cache:
   deluge_downloads:
   deluge_config:
   plex_data:

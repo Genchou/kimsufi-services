@@ -30,10 +30,6 @@ services:
     container_name: jellyfin
     network_mode: host
     user: ${DELUGE_UID:-1000}:${DELUGE_GID:-1000}
-    volumes:
-      - ./docker/jellyfin/config:/config
-      - ./docker/jellyfin/cache:/cache
-      - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
     restart: unless-stopped
 
   redis:
@@ -58,7 +54,15 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-owncloud}
     command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-u", "root", "--password=${MYSQL_ROOT_PASSWORD:-owncloud}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "--password=${MYSQL_ROOT_PASSWORD:-owncloud}",
+        ]
       interval: 10s
       timeout: 5s
       retries: 5

@@ -10,6 +10,10 @@ services:
 
   jellyfin:
     network_mode: host
+    volumes:
+      - ${JELLYFIN_CONFIG:-./docker/jellyfin/config}:/config
+      - ${JELLYFIN_CACHE:-./docker/jellyfin/cache}:/cache
+      - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
 
   deluge:
     network_mode: host

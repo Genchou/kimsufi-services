@@ -1,0 +1,23 @@
+#!/bin/sh
+
+RUN_ENV=dev
+
+while getopts 'e:' OPTION; do
+  case "$OPTION" in
+    e)
+      RUN_ENV=$OPTARG
+      ;;
+    *)
+      RUN_ENV=dev
+      ;;
+  esac
+done
+
+docker compose down --remove-orphans \
+  && docker compose build --pull --no-cache
+
+if [ $RUN_ENV == 'prod']; then
+  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+else
+  docker compose up -d
+fi

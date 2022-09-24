@@ -25,11 +25,11 @@
   }
 }
 
-{$OWNCLOUD_SERVER_NAME} {
-  log
+# {$OWNCLOUD_SERVER_NAME} {
+#   log
 
-  route {
-    encode gzip
-    reverse_proxy {$OWNCLOUD_HOST}:{$OWNCLOUD_PORT}
-  }
-}
+#   route {
+#     encode gzip
+#     reverse_proxy {$OWNCLOUD_HOST}:{$OWNCLOUD_PORT}
+#   }
+# }
