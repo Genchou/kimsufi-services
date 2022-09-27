@@ -43,7 +43,6 @@ services:
       - ${FILERUN_USER_FILES}:/user-files
 
   caddy:
-    network_mode: host
     volumes:
       - ${CADDY_DATA_DIR:-./docker/caddy/data}:/data
       - ${CADDY_CONFIG_DIR:-./docker/caddy/config}:/config
