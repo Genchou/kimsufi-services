@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 RUN_ENV=dev
 
@@ -13,13 +13,18 @@ while getopts 'e:' OPTION; do
   esac
 done
 
+echo $RUN_ENV
+if [ $RUN_ENV == "prod" ]; then
+  echo "RUNNING IN prod ENV"
+fi
+
 docker compose down --remove-orphans \
   && docker compose build --pull --no-cache
 
-if [ $RUN_ENV == 'prod']; then
+if [ $RUN_ENV == "prod" ]; then
   echo "Starting with PROD env"
   docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 else
-echo "Starting with DEV env"
+  echo "Starting with DEV env"
   docker compose up -d
 fi
