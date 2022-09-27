@@ -42,20 +42,10 @@ services:
     ports:
       - 3306:3306
 
-  # redis:
+  # filerun:
   #   volumes:
-  #     - redis:/data
-
-  # owncloud:
-  #   ports:
-  #     - ${OWNCLOUD_PORT:-8080}:8080
-  #   volumes:
-  #     - owncloud_files:/mnt/data
-
-  filerun:
-    volumes:
-      - filerun_html:/var/www/html
-      - filerun_user_files:/user-files
+  #     - filerun_html:/var/www/html
+  #     - filerun_user_files:/user-files
 
   caddy:
     environment:
