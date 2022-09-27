@@ -43,6 +43,15 @@ services:
       - ${FILERUN_USER_FILES}:/user-files
 
   caddy:
+    ports:
+      # HTTP
+      - target: 80
+        published: ${HTTP_PORT:-80}
+        protocol: tcp
+      # HTTPS
+      - target: 443
+        published: ${HTTPS_PORT:-443}
+        protocol: tcp
     volumes:
       - ${CADDY_DATA_DIR:-./docker/caddy/data}:/data
       - ${CADDY_CONFIG_DIR:-./docker/caddy/config}:/config
