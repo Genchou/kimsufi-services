@@ -94,5 +94,5 @@ services:
       PLEX_HOST: localhost
       JELLYFIN_HOST: localhost
       DELUGE_HOST: localhost
-      OWNCLOUD_HOST: localhost
       FILERUN_HOST: localhost
+      FILERUN_PORT: ${FILERUN_PORT:-8080}
