@@ -1,8 +1,11 @@
 plexdata
 .env.local
 .env
+downloads/*
 docker/caddy/config/*
 docker/caddy/data/*
-docker/jellyfin/config/*
-docker/jellyfin/cache/*
-docker/deluge/config/*
+docker/jellyfin/*
+docker/jellyfin/*
+docker/deluge/*
+docker/mariadb/*
+docker/redis/*
