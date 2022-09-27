@@ -85,9 +85,11 @@ services:
       - plex
       - deluge
       - jellyfin
+      - filerun
     environment:
       FILERUN_SERVER_NAME: ${FILERUN_SERVER_NAME:-filerun.local}
       PLEX_SERVER_NAME: ${PLEX_SERVER_NAME:-plex.local}
+      PLEX_WEB_PORT: ${PLEX_WEB_PORT:-32400}
       DELUGE_SERVER_NAME: ${DELUGE_SERVER_NAME:-deluge.local}
       JELLYFIN_SERVER_NAME: ${JELLYFIN_SERVER_NAME:-jellyfin.local}
       OWNCLOUD_SERVER_NAME: ${OWNCLOUD_SERVER_NAME:-owncloud.local}

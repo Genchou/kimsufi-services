@@ -12,7 +12,7 @@
 
   route {
     encode gzip
-    reverse_proxy {$PLEX_HOST}:32400
+    reverse_proxy {$PLEX_HOST}:{$PLEX_WEB_PORT}
   }
 }
 
