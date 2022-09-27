@@ -47,6 +47,10 @@ services:
   #   volumes:
   #     - ${REDIS_DIR:-./docker/redis/data}:/data
 
+  filerun:
+    volumes:
+      - ${FILERUN_USER_FILES}:/user-files
+
   # owncloud:
   #   # network_mode: host
   #   ports:

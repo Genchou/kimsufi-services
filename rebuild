@@ -1,9 +1,33 @@
 #!/bin/bash
 
 RUN_ENV=dev
+SKIP_DOWN=1
 
-while getopts 'e:' OPTION; do
+function down {
+  echo "Bring everything down"
+  docker compose down --remove-orphans
+}
+
+function rebuild {
+  echo "Rebuilding"
+  docker compose build --pull --no-cache
+}
+
+function startDev {
+  echo "Starting with DEV env"
+  docker compose up -d
+}
+
+function startProd {
+  echo "Starting with PROD env"
+  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+}
+
+while getopts 'de:' OPTION; do
   case "$OPTION" in
+    d)
+      SKIP_DOWN=0
+      ;;
     e)
       RUN_ENV=$OPTARG
       ;;
@@ -13,18 +37,14 @@ while getopts 'e:' OPTION; do
   esac
 done
 
-echo $RUN_ENV
-if [ $RUN_ENV == "prod" ]; then
-  echo "RUNNING IN prod ENV"
+if [ $SKIP_DOWN -eq 0 ]; then
+  down
 fi
 
-docker compose down --remove-orphans \
-  && docker compose build --pull --no-cache
+rebuild
 
 if [ $RUN_ENV == "prod" ]; then
-  echo "Starting with PROD env"
-  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  startProd
 else
-  echo "Starting with DEV env"
-  docker compose up -d
+  startDev
 fi
