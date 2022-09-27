@@ -36,11 +36,11 @@ services:
       - jellyfin_config:/config
       - jellyfin_data:/media
 
-  mariadb:
-    volumes:
-      - mariadb:/var/lib/mysql
-    ports:
-      - 3306:3306
+  # mariadb:
+  #   volumes:
+  #     - mariadb:/var/lib/mysql
+  #   ports:
+  #     - 3306:3306
 
   # filerun:
   #   volumes:
