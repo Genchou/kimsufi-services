@@ -85,7 +85,7 @@ services:
       - plex
       - deluge
       - jellyfin
-      - filerun
+      # - filerun
     environment:
       FILERUN_SERVER_NAME: ${FILERUN_SERVER_NAME:-filerun.local}
       PLEX_SERVER_NAME: ${PLEX_SERVER_NAME:-plex.local}
