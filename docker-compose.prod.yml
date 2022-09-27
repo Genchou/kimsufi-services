@@ -2,39 +2,57 @@ version: "3.4"
 
 services:
   plex:
-    network_mode: host
+    # network_mode: host
+    ports:
+      - 32400:32400/tcp
+      - 3005:3005/tcp
+      - 8324:8324/tcp
+      - 32469:32469/tcp
+      - 1900:1900/udp
+      - 32410:32410/udp
+      - 32412:32412/udp
+      - 32413:32413/udp
+      - 32414:32414/udp
     volumes:
       - ${PLEX_DATA:-./plexdata}/database:/config
       - ${PLEX_DATA:-./plexdata}/transcode:/transcode
       - ${PLEX_DATA:-./plexdata}/media:/data
 
   jellyfin:
-    network_mode: host
+    # network_mode: host
+    ports:
+      - 8096:8096
     volumes:
       - ${JELLYFIN_CONFIG:-./docker/jellyfin/config}:/config
       - ${JELLYFIN_CACHE:-./docker/jellyfin/cache}:/cache
       - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
 
   deluge:
-    network_mode: host
+    # network_mode: host
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
     volumes:
       - ${DELUGE_CONFIG_DIR:-./docker/deluge/config}:/config
       - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
 
-  mariadb:
-    network_mode: host
-    volumes:
-      - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
+  # mariadb:
+  #   # network_mode: host
+  #   volumes:
+  #     - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
 
-  redis:
-    network_mode: host
-    volumes:
-      - ${REDIS_DIR:-./docker/redis/data}:/data
+  # redis:
+  #   # network_mode: host
+  #   volumes:
+  #     - ${REDIS_DIR:-./docker/redis/data}:/data
 
-  owncloud:
-    network_mode: host
-    volumes:
-      - ${OWNCLOUD_DATA_DIR:-./docker/owncloud/data}:/mnt/data
+  # owncloud:
+  #   # network_mode: host
+  #   ports:
+  #     - ${OWNCLOUD_PORT:-8080}:8080
+  #   volumes:
+  #     - ${OWNCLOUD_DATA_DIR:-./docker/owncloud/data}:/mnt/data
 
   caddy:
     network_mode: host

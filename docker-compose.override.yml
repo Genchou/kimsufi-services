@@ -36,19 +36,19 @@ services:
       - jellyfin_config:/config
       - jellyfin_data:/media
 
-  mariadb:
-    volumes:
-      - mariadb:/var/lib/mysql
+  # mariadb:
+  #   volumes:
+  #     - mariadb:/var/lib/mysql
 
-  redis:
-    volumes:
-      - redis:/data
+  # redis:
+  #   volumes:
+  #     - redis:/data
 
-  owncloud:
-    ports:
-      - ${OWNCLOUD_PORT:-8080}:8080
-    volumes:
-      - owncloud_files:/mnt/data
+  # owncloud:
+  #   ports:
+  #     - ${OWNCLOUD_PORT:-8080}:8080
+  #   volumes:
+  #     - owncloud_files:/mnt/data
 
   caddy:
     environment:
