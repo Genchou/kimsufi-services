@@ -21,13 +21,15 @@ services:
       - ${DELUGE_CONFIG_DIR:-./docker/deluge/config}:/config
       - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
 
-  # mariadb:
-  #   volumes:
-  #     - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
+  mariadb:
+    volumes:
+      - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
 
-  # filerun:
-  #   volumes:
-  #     - ${FILERUN_USER_FILES}:/user-files
+  filerun:
+    ports:
+      - ${FILERUN_PORT:-8080}:80
+    volumes:
+      - ${FILERUN_USER_FILES}:/user-files
 
   caddy:
     network_mode: host

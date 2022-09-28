@@ -32,48 +32,46 @@ services:
     user: ${DELUGE_UID:-1000}:${DELUGE_GID:-1000}
     restart: unless-stopped
 
-  # mariadb:
-  #   image: mariadb
-  #   container_name: mariadb
-  #   restart: always
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-cloudserver}
-  #     - MYSQL_USER=${MYSQL_USER:-cloudserver}
-  #     - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cloudserver}
-  #     - MYSQL_DATABASE=${MYSQL_DATABASE:-cloudserver}
-  #   command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
-  #   healthcheck:
-  #     test:
-  #       [
-  #         "CMD",
-  #         "mysqladmin",
-  #         "ping",
-  #         "-u",
-  #         "root",
-  #         "--password=${MYSQL_ROOT_PASSWORD:-cloudserver}",
-  #       ]
-  #     interval: 10s
-  #     timeout: 5s
-  #     retries: 5
+  mariadb:
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-cloudserver}
+      - MYSQL_USER=${MYSQL_USER:-cloudserver}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-cloudserver}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cloudserver}
+    command: ["--max-allowed-packet=128M", "--innodb-log-file-size=64M"]
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-u",
+          "root",
+          "--password=${MYSQL_ROOT_PASSWORD:-cloudserver}",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  # filerun:
-  #   image: filerun/filerun
-  #   environment:
-  #     FR_DB_HOST: mariadb
-  #     FR_DB_PORT: 3306
-  #     FR_DB_NAME: ${FILERUN_DB_NAME:-cloudserver}
-  #     FR_DB_USER: ${FILERUN_DB_USER:-cloudserver}
-  #     FR_DB_PASS: ${FILERUN_DB_PASSWORD:-cloudserver}
-  #     APACHE_RUN_USER: www-data
-  #     APACHE_RUN_USER_ID: 33
-  #     APACHE_RUN_GROUP: www-data
-  #     APACHE_RUN_GROUP_ID: 33
-  #   depends_on:
-  #     - mariadb
-  #   links:
-  #     - mariadb:mariadb
-  #   ports:
-  #     - ${FILERUN_PORT:-8080}:80
+  filerun:
+    image: filerun/filerun
+    environment:
+      FR_DB_HOST: mariadb
+      FR_DB_PORT: 3306
+      FR_DB_NAME: ${FILERUN_DB_NAME:-cloudserver}
+      FR_DB_USER: ${FILERUN_DB_USER:-cloudserver}
+      FR_DB_PASS: ${FILERUN_DB_PASSWORD:-cloudserver}
+      APACHE_RUN_USER: www-data
+      APACHE_RUN_USER_ID: 33
+      APACHE_RUN_GROUP: www-data
+      APACHE_RUN_GROUP_ID: 33
+    depends_on:
+      - mariadb
+    links:
+      - mariadb:mariadb
 
   caddy:
     build:
