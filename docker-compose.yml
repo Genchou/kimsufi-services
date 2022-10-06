@@ -58,6 +58,7 @@ services:
 
   filerun:
     image: filerun/filerun
+    container_name: filerun
     environment:
       FR_DB_HOST: mariadb
       FR_DB_PORT: 3306

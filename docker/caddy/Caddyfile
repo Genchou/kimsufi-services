@@ -7,7 +7,7 @@
   }
 }
 
-{$PLEX_SERVER_NAME} {
+{$PLEX_SERVER_NAME}, tv.salut.lol {
   log
 
   route {

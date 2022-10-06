@@ -37,6 +37,7 @@ services:
       PLEX_HOST: localhost
       JELLYFIN_HOST: localhost
       DELUGE_HOST: localhost
+      FILERUN_HOST: localhost
     volumes:
       - ${CADDY_DATA_DIR:-./docker/caddy/data}:/data
       - ${CADDY_CONFIG_DIR:-./docker/caddy/config}:/config
