@@ -26,28 +26,28 @@ services:
       - deluge_downloads:/config
       - deluge_config:/downloads
 
-  jellyfin:
-    ports:
-      - 8096:8096
-    expose:
-      - 8096
-    volumes:
-      - jellyfin_cache:/cache
-      - jellyfin_config:/config
-      - jellyfin_data:/media
+  # jellyfin:
+  #   ports:
+  #     - 8096:8096
+  #   expose:
+  #     - 8096
+  #   volumes:
+  #     - jellyfin_cache:/cache
+  #     - jellyfin_config:/config
+  #     - jellyfin_data:/media
 
-  mariadb:
-    volumes:
-      - mariadb:/var/lib/mysql
-    ports:
-      - 3306:3306
+  # mariadb:
+  #   volumes:
+  #     - mariadb:/var/lib/mysql
+  #   ports:
+  #     - 3306:3306
 
-  filerun:
-    ports:
-      - ${FILERUN_PORT:-8080}:80
-    volumes:
-      - filerun_html:/var/www/html
-      - filerun_user_files:/user-files
+  # filerun:
+  #   ports:
+  #     - ${FILERUN_PORT:-8080}:80
+  #   volumes:
+  #     - filerun_html:/var/www/html
+  #     - filerun_user_files:/user-files
 
   caddy:
     environment:
@@ -71,16 +71,16 @@ services:
 volumes:
   caddy_data:
   caddy_config:
-  owncloud_files:
-  mariadb:
-  redis:
-  jellyfin_data:
-  jellyfin_config:
-  jellyfin_cache:
+  # owncloud_files:
+  # mariadb:
+  # redis:
+  # jellyfin_data:
+  # jellyfin_config:
+  # jellyfin_cache:
   deluge_downloads:
   deluge_config:
   plex_data:
   plex_transcode:
   plex_config:
-  filerun_html:
-  filerun_user_files:
+  # filerun_html:
+  # filerun_user_files:

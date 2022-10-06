@@ -16,20 +16,20 @@
   }
 }
 
-{$JELLYFIN_SERVER_NAME} {
-  log
+# {$JELLYFIN_SERVER_NAME} {
+#   log
 
-  route {
-    encode gzip
-    reverse_proxy {$JELLYFIN_HOST}:8096
-  }
-}
+#   route {
+#     encode gzip
+#     reverse_proxy {$JELLYFIN_HOST}:8096
+#   }
+# }
 
-{$FILERUN_SERVER_NAME} {
-  log
+# {$FILERUN_SERVER_NAME} {
+#   log
 
-  route {
-    encode gzip
-    reverse_proxy {$FILERUN_HOST}:{$FILERUN_PORT}
-  }
-}
+#   route {
+#     encode gzip
+#     reverse_proxy {$FILERUN_HOST}:{$FILERUN_PORT}
+#   }
+# }

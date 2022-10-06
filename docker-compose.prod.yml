@@ -8,12 +8,12 @@ services:
       - ${PLEX_DATA:-./plexdata}/transcode:/transcode
       - ${PLEX_DATA:-./plexdata}/media:/data
 
-  jellyfin:
-    network_mode: host
-    volumes:
-      - ${JELLYFIN_CONFIG:-./docker/jellyfin/config}:/config
-      - ${JELLYFIN_CACHE:-./docker/jellyfin/cache}:/cache
-      - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
+  # jellyfin:
+  #   network_mode: host
+  #   volumes:
+  #     - ${JELLYFIN_CONFIG:-./docker/jellyfin/config}:/config
+  #     - ${JELLYFIN_CACHE:-./docker/jellyfin/cache}:/cache
+  #     - ${JELLYFIN_MEDIA:-./docker/jellyfin/media}:/media
 
   deluge:
     network_mode: host
@@ -21,15 +21,15 @@ services:
       - ${DELUGE_CONFIG_DIR:-./docker/deluge/config}:/config
       - ${DELUGE_DOWNLOADS_DIR:-./docker/deluge/downloads}:/downloads
 
-  mariadb:
-    volumes:
-      - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
+  # mariadb:
+  #   volumes:
+  #     - ${MARIADB_DIR:-./docker/mariadb/data}:/var/lib/mysql
 
-  filerun:
-    ports:
-      - ${FILERUN_PORT:-8080}:80
-    volumes:
-      - ${FILERUN_USER_FILES}:/user-files
+  # filerun:
+  #   ports:
+  #     - ${FILERUN_PORT:-8080}:80
+  #   volumes:
+  #     - ${FILERUN_USER_FILES}:/user-files
 
   caddy:
     network_mode: host
