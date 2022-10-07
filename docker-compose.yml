@@ -83,7 +83,7 @@ services:
     depends_on:
       - plex
       - deluge
-      - jellyfin
+      # - jellyfin
       # - filerun
     environment:
       # FILERUN_SERVER_NAME: ${FILERUN_SERVER_NAME:-filerun.local}
