@@ -36,18 +36,18 @@ services:
   #     - jellyfin_config:/config
   #     - jellyfin_data:/media
 
-  # mariadb:
-  #   volumes:
-  #     - mariadb:/var/lib/mysql
-  #   ports:
-  #     - 3306:3306
+  mariadb:
+    volumes:
+      - mariadb:/var/lib/mysql
+    ports:
+      - 3306:3306
 
-  # filerun:
-  #   ports:
-  #     - ${FILERUN_PORT:-8080}:80
-  #   volumes:
-  #     - filerun_html:/var/www/html
-  #     - filerun_user_files:/user-files
+  filerun:
+    ports:
+      - ${FILERUN_PORT:-8080}:80
+    volumes:
+      - filerun_html:/var/www/html
+      - filerun_user_files:/user-files
 
   caddy:
     environment:
@@ -72,7 +72,7 @@ volumes:
   caddy_data:
   caddy_config:
   # owncloud_files:
-  # mariadb:
+  mariadb:
   # redis:
   # jellyfin_data:
   # jellyfin_config:
@@ -82,5 +82,5 @@ volumes:
   plex_data:
   plex_transcode:
   plex_config:
-  # filerun_html:
-  # filerun_user_files:
+  filerun_html:
+  filerun_user_files:
