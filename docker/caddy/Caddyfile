@@ -34,9 +34,11 @@
   }
 }
 
-{$STATIC_FILES} {
+{$FILES_SERVER_NAME} {
   log
 
-  root * /var/www
-  file_server
+  file_server {
+    browse
+    root /var/www
+  }
 }
