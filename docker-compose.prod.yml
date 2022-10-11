@@ -41,3 +41,4 @@ services:
     volumes:
       - ${CADDY_DATA_DIR:-./docker/caddy/data}:/data
       - ${CADDY_CONFIG_DIR:-./docker/caddy/config}:/config
+      - ${FILES_ROOT_DIR:-./static}:/var/www

@@ -58,6 +58,7 @@ services:
     volumes:
       - caddy_data:/data
       - caddy_config:/config
+      - files_root_dir:/var/www
     ports:
       # HTTP
       - target: 80
@@ -84,3 +85,4 @@ volumes:
   plex_config:
   filerun_html:
   filerun_user_files:
+  files_root_dir:

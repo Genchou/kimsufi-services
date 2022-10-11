@@ -91,6 +91,7 @@ services:
       PLEX_WEB_PORT: ${PLEX_WEB_PORT:-32400}
       DELUGE_SERVER_NAME: ${DELUGE_SERVER_NAME:-deluge.local}
       JELLYFIN_SERVER_NAME: ${JELLYFIN_SERVER_NAME:-jellyfin.local}
+      FILES_SERVER_NAME: ${FILES_SERVER_NAME:-files.local}
       # OWNCLOUD_SERVER_NAME: ${OWNCLOUD_SERVER_NAME:-owncloud.local}
       PLEX_HOST: ${PLEX_HOST:-plex}
       # JELLYFIN_HOST: ${JELLYFIN_HOST:-jellyfin}

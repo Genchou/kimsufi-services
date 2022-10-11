@@ -33,3 +33,10 @@
     reverse_proxy {$FILERUN_HOST}:{$FILERUN_PORT}
   }
 }
+
+{$STATIC_FILES} {
+  log
+
+  root * /var/www
+  file_server
+}
