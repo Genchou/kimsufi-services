@@ -2,6 +2,7 @@
 
 RUN_ENV=dev
 SKIP_DOWN=1
+LOGS=0
 
 function down {
   echo "Bring everything down"
@@ -13,23 +14,31 @@ function rebuild {
   docker compose build --pull --no-cache
 }
 
-function startDev {
+function startDev() {
   echo "Starting with DEV env"
   docker compose up -d
 }
 
-function startProd {
+function startProd() {
   echo "Starting with PROD env"
-  docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  if [ $1 -eq 1 ]; then
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d \
+      && docker compose logs -f caddy
+  else
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+  fi
 }
 
-while getopts 'de:' OPTION; do
+while getopts 'de:l' OPTION; do
   case "$OPTION" in
     d)
       SKIP_DOWN=0
       ;;
     e)
       RUN_ENV=$OPTARG
+      ;;
+    l)
+      LOGS=1
       ;;
     *)
       RUN_ENV=dev
@@ -44,7 +53,7 @@ fi
 rebuild
 
 if [ $RUN_ENV == "prod" ]; then
-  startProd
+  startProd $LOGS
 else
-  startDev
+  startDev $LOGS
 fi

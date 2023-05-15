@@ -34,8 +34,13 @@
   }
 }
 
+
 {$FILES_SERVER_NAME} {
   log
+ 
+  basicauth /var/www/* {
+    Genchou $2a$14$wt3EZh7txpnuxPluyBCBhefJLCcaU5QJ5L2Ohvy0aLyP2FfNHaeSe
+  }
 
   file_server {
     browse
